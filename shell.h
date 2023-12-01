@@ -7,4 +7,5 @@
 void printf_md(const char *stringmd);
 void dis_prompt(void);
 void execute_cmd(const char *cmd);
+void read_cmd(char *cmd, size_t size);
 #endif
