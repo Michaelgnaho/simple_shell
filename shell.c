@@ -4,15 +4,15 @@
  * Return: 0
  */
 
-void main(void)
+int main(void)
 {
 	char cmd[150];
 
 	while (1)
 	{
 		dis_prompt();
-		read_cmd;
-		execute_cmd;
+		read_cmd(cmd, sizeof(cmd));
+		execute_cmd(cmd);
 
 	}
 	return (0);
