@@ -81,7 +81,7 @@ void execute_cmd(const char *cmd) {
         write(2, "Error forking process.\n", strlen("Error forking process.\n"));
         exit(EXIT_FAILURE);
     } else if (child_pid == 0) {
-        /* Child process*/
+        /* Child process */
         if (execlp("/bin/sh", "/bin/sh", "-c", cmd, NULL) == -1) {
             /* If execlp fails*/
             write(2, "Error executing command.\n", strlen("Error executing command.\n"));
