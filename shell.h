@@ -77,4 +77,65 @@ int md_set_alias(md_info_t *md_info, char *str);
 int md_print_alias(list_t *node);
 int md_alias(md_info_t *md_info);
 
+
+
+
+
+
+/************************************* DASURF FUNCTION PROTOTYPES *********************************************************/
+/**************************************************************************************************************************/
+/**************************************************************************************************************************/
+
+
+
+/* md_lists.c prototypes */
+list_t *addHistoryNode(list_t **historyHead, const char *command, int index);
+list_t *addHistoryNodeEnd(list_t **historyHead, const char *command, int index);
+size_t printCommandHistory(const list_t *history);
+int deleteCommandAtIndex(list_t **historyHead, unsigned int index);
+void clearCommandHistory(list_t **historyHead);
+
+
+/* md_lists1.c prototypes */
+size_t md_list_length(const list_t *h);
+char **md_list_to_strings(list_t *head);
+size_t md_print_list(const list_t *h);
+list_t *md_node_starts_with(list_t *node, char *prefix, char c);
+ssize_t md_get_node_index(list_t *head, list_t *node);
+
+
+/* md_memory.c prototypes */
+int mdFree(void **ptr);
+
+
+/* md_parser.c prototypes */
+char *mdFindPath(info_t *info, char *pathstr, char *cmd);
+int mdIsCommand(info_t *info, char *path);
+char *mdDuplicateChars(char *pathstr, int start, int stop);
+
+
+/* md_realloc.c prototypes */
+void mdFreeStrings(char **pptr);
+void *mdReallocateMemory(void *ptr, unsigned int oldSize, unsigned int newSize);
+char *mdMemset(char *str, char d, unsigned int num);
+
+/* md_shell_loop.c prototypes */
+int mdShellLoop(info_t *mdInfo, char **mdAv);
+int mdFindBuiltin(info_t *mdInfo);
+void mdFindCmd(info_t *mdInfo);
+void mdForkCmd(info_t *mdInfo);
+
+/* md_string.c prototypes */
+int mdStrlen(char *str);
+int mdStrcmp(char *str1, char *str2);
+char *mdStartsWith(const char *hayStack, const char *needle);
+char *mdStrcat(char *dest, char *src);
+
+/* md_string1.c prototypes */
+char *mdCopyString(char *destination, char *source);
+char *mdStringDuplicate(const char *str);
+void mdPrintString(char *str);
+int mdWriteCharacter(char character);
+
+
 #endif  /* SHELL_H */
