@@ -83,9 +83,9 @@ void mdPrintString(char *str)
 int mdWriteCharacter(char character)
 {
 	static int index;
-	static char buffer[WRITE_BUFFER_SIZE]; /* Original name is WRITE_BUF_SIZE */
+	static char buffer[WRITE_BUF_SIZE]; /* Original name is WRITE_BUF_SIZE */
 
-	if (character == BUF_FLUSH || index >= WRITE_BUFFER_SIZE)
+	if (character == BUF_FLUSH || index >= WRITE_BUF_SIZE)
 	{
 		write(1, buffer, index);
 		index = 0;

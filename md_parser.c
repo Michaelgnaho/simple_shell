@@ -16,9 +16,7 @@ int mdIsCommand(md_info_t *info, char *path)
 		return (0);
 
 	if (st.st_mode & S_IFREG)
-	{
 		return (1);
-	}
 	return (0);
 }
 

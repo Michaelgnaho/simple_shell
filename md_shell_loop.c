@@ -36,9 +36,9 @@ int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 		exit(mdInfo->status);
 	if (builtinResult == -2)
 	{
-		if (mdInfo->errNum == -1)
+		if (mdInfo->err_num == -1)
 			exit(mdInfo->status);
-		exit(mdInfo->errNum);
+		exit(mdInfo->err_num);
 	}
 	return (builtinResult);
 }
@@ -55,11 +55,11 @@ int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 int mdFindBuiltin(md_info_t *mdInfo)
 {
 	int i, builtinResult = -1;
-	builtinTable builtintbl[] = {
+	builtin_table builtintbl[] = {
 		{"exit", md_exit},
-		{"env", md_env},
+		{"env", md_display_env},
 		{"help", md_help},
-		{"history", md_history},
+		{"history", md_display_history},
 		{"setenv", md_setenv},
 		{"unsetenv", md_unsetenv},
 		{"cd", md_cd},
