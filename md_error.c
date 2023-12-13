@@ -8,7 +8,7 @@
  *
  * Return: Nothing.
  */
-void md_puts_err(char *str)
+void md_eputs(char *str)
 {
     int i = 0;
 
@@ -16,7 +16,7 @@ void md_puts_err(char *str)
         return;
     while (str[i] != '\0')
     {
-        md_put_err_char(str[i]);
+        md_eputchar(str[i]);
         i++;
     }
 }
@@ -27,7 +27,7 @@ void md_puts_err(char *str)
  *
  * Return: On success, returns 1. On error, returns -1, and sets errno appropriately.
  */
-int md_put_err_char(char c)
+int md_eputchar(char c)
 {
     static int i;
     static char buf[WRITE_BUF_SIZE];

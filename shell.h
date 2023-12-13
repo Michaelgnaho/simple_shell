@@ -121,8 +121,8 @@ int md_unset_env(md_info_t *md_info);
 int md_populate_env_list(md_info_t *md_info);
 
 /*md_error.c*/
-void md_puts_err(char *str);
-int md_put_err_char(char c);
+void md_eputs(char *str);
+int md_eputchar(char c);
 int md_putfd(char c, int fd);
 int md_putsfd(char *str, int fd);
 
