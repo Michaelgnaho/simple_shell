@@ -120,7 +120,7 @@ int md_set_env(md_info_t *md_info);
 int md_unset_env(md_info_t *md_info);
 int md_populate_env_list(md_info_t *md_info);
 
-/*md_error.c*/
+/*md_errors.c*/
 void md_puts_err(char *str);
 int md_put_err_char(char c);
 int md_putfd(char c, int fd);
@@ -136,7 +136,7 @@ void md_remove_comments(char *buf);
 /*md_exit.c*/
 char *md_strncpy(char *dest, char *src, int n);
 char *md_strncat(char *dest, char *src, int n);
-char *md_strchr(char *s, char c)
+char *md_strchr(char *s, char c);
 
 /*md_getline.c*/
 ssize_t md_input_buffer(md_info_t *md_info, char **buf, size_t *len);

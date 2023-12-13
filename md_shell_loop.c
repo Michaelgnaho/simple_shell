@@ -27,7 +27,7 @@ int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 				mdFindCmd(mdInfo);
 		}
 		else if (mdInteractive(mdInfo))
-			_putchar('\n');
+			mdWriteCharacter('\n');
 		mdFreeInfo(mdInfo, 0);
 	}
 	mdWriteHistory(mdInfo);

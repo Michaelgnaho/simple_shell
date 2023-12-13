@@ -12,18 +12,18 @@ char *md_get_history_file(md_info_t *md_info)
 {
 	char *buf, *dir;
 
-	dir = md_getenv(md_info, "HOME=");
+	dir = md_get_env(md_info, "HOME=");
 	if (!dir)
 		return (NULL);
 
-	buf = md_malloc(sizeof(char) * (md_strlen(dir) + md_strlen(HIST_FILE) + 2));
+	buf = malloc(sizeof(char) * (mdStrlen(dir) + mdStrlen(HIST_FILE) + 2));
 	if (!buf)
 		return (NULL);
 
 	buf[0] = 0;
-	md_strcpy(buf, dir);
-	md_strcat(buf, "/");
-	md_strcat(buf, HIST_FILE);
+	mdCopyString(buf, dir);
+	mdStrcat(buf, "/");
+	mdStrcat(buf, HIST_FILE);
 
 	return (buf);
 }
@@ -89,7 +89,7 @@ int md_read_history(md_info_t *md_info)
 	if (fsize < 2)
 		return (0);
 
-	buf = md_malloc(sizeof(char) * (fsize + 1));
+	buf = malloc(sizeof(char) * (fsize + 1));
 	if (!buf)
 		return (0);
 
@@ -116,7 +116,7 @@ int md_read_history(md_info_t *md_info)
 	md_info->histcount = linecount;
 
 	while (md_info->histcount-- >= HIST_MAX)
-		md_delete_node_at_index(&(md_info->history), 0);
+		deleteCommandAtIndex(&(md_info->history), 0);
 
 	md_renumber_history(md_info);
 	return (md_info->histcount);
@@ -137,7 +137,7 @@ int md_build_history_list(md_info_t *md_info, char *buf, int linecount)
 	if (md_info->history)
 		node = md_info->history;
 
-	md_add_node_end(&node, buf, linecount);
+	addHistoryNodeEnd(&node, buf, linecount);
 
 	if (!md_info->history)
 		md_info->history = node;

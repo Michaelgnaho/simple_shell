@@ -57,12 +57,12 @@ void md_print_error(md_info_t *info, char *estr)
  */
 int md_print_d(int input, int fd)
 {
-	int (*__putchar)(char) = md_putchar;
+	int (*__putchar)(char) = mdWriteCharacter;
 	int i, count = 0;
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		__putchar = md_eputchar;
+		__putchar = md_put_err_char;
 	if (input < 0)
 	{
 		_abs_ = -input;

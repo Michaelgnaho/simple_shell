@@ -40,7 +40,7 @@ char **md_list_to_strings(list_t *head)
 
 	for (i = 0; node; node = node->next, i++)
 	{
-		str = malloc(_strlen(node->str) + 1);
+		str = malloc(mdStrlen(node->str) + 1);
 		if (!str)
 		{
 			for (j = 0; j < i; j++)
@@ -49,7 +49,7 @@ char **md_list_to_strings(list_t *head)
 			return (NULL);
 		}
 
-		str = _strcpy(str, node->str);
+		str = mdCopyString(str, node->str);
 		strs[i] = str;
 	}
 	strs[i] = NULL;
@@ -68,11 +68,11 @@ size_t md_print_list(const list_t *h)
 
 	while (h)
 	{
-		_puts(convert_number(h->num, 10, 0));
-		_putchar(':');
-		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
-		_puts("\n");
+		mdPrintString(convert_number(h->num, 10, 0));
+		mdWriteCharacter(':');
+		mdWriteCharacter(' ');
+		mdPrintString(h->str ? h->str : "(nil)");
+		mdPrintString("\n");
 		h = h->next;
 		i++;
 	}
@@ -93,7 +93,7 @@ list_t *md_node_starts_with(list_t *node, char *prefix, char c)
 
 	while (node)
 	{
-		p = starts_with(node->str, prefix);
+		p = mdStartsWith(node->str, prefix);
 		if (p && ((c == -1) || (*p == c)))
 			return (node);
 		node = node->next;

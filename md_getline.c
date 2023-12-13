@@ -38,7 +38,7 @@ ssize_t md_input_buffer(md_info_t *md_info, char **buf, size_t *len)
 			md_remove_comments(*buf);
 			md_build_history_list(md_info, *buf, md_info->histcount++);
 
-			/* if (_strchr(*buf, ';')) is this a command chain? */
+			/* if (md_strchr(*buf, ';')) is this a command chain? */
 			{
 				*len = bytes_read;
 				md_info->cmd_buf = buf;
@@ -62,7 +62,7 @@ ssize_t md_get_input(md_info_t *md_info)
 	char **buf_p = &(md_info->arg);
 	char *p;
 
-	_putchar(BUF_FLUSH);
+	mdWriteCharacter(BUF_FLUSH);
 	bytes_read = md_input_buffer(md_info, &buf, &len);
 
 	if (bytes_read == -1) /* EOF */
@@ -73,11 +73,11 @@ ssize_t md_get_input(md_info_t *md_info)
 		j = i; /* init new iterator to current buf position */
 		p = buf + i; /* get pointer for return */
 
-		md_check_chain(md_info, buf, &j, i, len);
+		mdCheckChain(md_info, buf, &j, i, len);
 
 		while (j < len) /* iterate to semicolon or end */
 		{
-			if (md_is_chain(md_info, buf, &j))
+			if (mdIsChainDelimiter(md_info, buf, &j))
 				break;
 			j++;
 		}
@@ -90,7 +90,7 @@ ssize_t md_get_input(md_info_t *md_info)
 		}
 
 		*buf_p = p; /* pass back pointer to current command position */
-		return (md_strlen(p)); /* return length of current command */
+		return (mdStrlen(p)); /* return length of current command */
 	}
 
 	*buf_p = buf; /* else not a chain, pass back buffer from md_get_line() */
@@ -150,7 +150,7 @@ int md_get_line(md_info_t *md_info, char **ptr, size_t *length)
 
 	c = md_strchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = md_realloc(p, total_bytes, total_bytes ? total_bytes + k : k + 1);
+	new_p = mdReallocateMemory(p, total_bytes, total_bytes ? total_bytes + k : k + 1);
 
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? (free(p), -1) : -1);
@@ -179,7 +179,7 @@ int md_get_line(md_info_t *md_info, char **ptr, size_t *length)
  */
 void md_sigint_handler(__attribute__((unused))int sig_num)
 {
-	_puts("\n");
-	_puts("$ ");
-	_putchar(BUF_FLUSH);
+	mdPrintString("\n");
+	mdPrintString("$ ");
+	mdWriteCharacter(BUF_FLUSH);
 }

@@ -10,7 +10,7 @@
  */
 int md_display_history(md_info_t *md_info)
 {
-	print_list(md_info->history);
+	md_print_list(md_info->history);
 	return (0);
 }
 
@@ -26,11 +26,11 @@ int md_unset_alias(md_info_t *md_info, char *str)
 	char *p;
 	int ret;
 
-	p = _strchr(str, '=');
+	p = md_strchr(str, '=');
 	if (!p)
 		return (1);
-	ret = delete_node_at_index(&(md_info->alias),
-			get_node_index(md_info->alias, node_starts_with(md_info->alias, str, -1)));
+	ret = deleteCommandAtIndex(&(md_info->alias),
+			md_get_node_index(md_info->alias, md_node_starts_with(md_info->alias, str, -1)));
 	return (ret);
 }
 
@@ -45,14 +45,14 @@ int md_set_alias(md_info_t *md_info, char *str)
 {
 	char *p;
 
-	p = _strchr(str, '=');
+	p = md_strchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
 		return (md_unset_alias(md_info, str));
 
 	md_unset_alias(md_info, str);
-	return (add_node_end(&(md_info->alias), str, 0) == NULL);
+	return (addHistoryNodeEnd(&(md_info->alias), str, 0) == NULL);
 }
 
 /**
@@ -67,12 +67,12 @@ int md_print_alias(list_t *node)
 
 	if (node)
 	{
-		p = _strchr(node->str, '=');
+		p = md_strchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
-			_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
+			mdWriteCharacter(*a);
+		mdWriteCharacter('\'');
+		mdPrintString(p + 1);
+		mdPrintString("'\n");
 		return (0);
 	}
 	return (1);
@@ -102,11 +102,11 @@ int md_alias(md_info_t *md_info)
 	}
 	for (i = 1; md_info->argv[i]; i++)
 	{
-		p = _strchr(md_info->argv[i], '=');
+		p = md_strchr(md_info->argv[i], '=');
 		if (p)
 			md_set_alias(md_info, md_info->argv[i]);
 		else
-			md_print_alias(node_starts_with(md_info->alias, md_info->argv[i], '='));
+			md_print_alias(md_node_starts_with(md_info->alias, md_info->argv[i], '='));
 	}
 
 	return (0);

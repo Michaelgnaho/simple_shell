@@ -26,13 +26,13 @@ void md_set_info(md_info_t *md_info, char **av)
 	md_info->fname = av[0];
 	if (md_info->arg)
 	{
-		md_info->argv = strtow(md_info->arg, " \t");
+		md_info->argv = mdSplitString(md_info->arg, " \t");
 		if (!md_info->argv)
 		{
 			md_info->argv = malloc(sizeof(char *) * 2);
 			if (md_info->argv)
 			{
-				md_info->argv[0] = _strdup(md_info->arg);
+				md_info->argv[0] = mdStringDuplicate(md_info->arg);
 				md_info->argv[1] = NULL;
 			}
 		}
@@ -40,8 +40,8 @@ void md_set_info(md_info_t *md_info, char **av)
 			;
 		md_info->argc = i;
 
-		replace_alias(md_info);
-		replace_vars(md_info);
+		mdReplaceAlias(md_info);
+		mdReplaceVars(md_info);
 	}
 }
 
@@ -52,7 +52,7 @@ void md_set_info(md_info_t *md_info, char **av)
  */
 void md_free_info(md_info_t *md_info, int all)
 {
-	ffree(md_info->argv);
+	mdFreeStrings(md_info->argv);
 	md_info->argv = NULL;
 	md_info->path = NULL;
 	if (all)
@@ -60,16 +60,16 @@ void md_free_info(md_info_t *md_info, int all)
 		if (!md_info->cmd_buf)
 			free(md_info->arg);
 		if (md_info->env)
-			free_list(&(md_info->env));
+			clearCommandHistory(&(md_info->env));
 		if (md_info->history)
-			free_list(&(md_info->history));
+			clearCommandHistory(&(md_info->history));
 		if (md_info->alias)
-			free_list(&(md_info->alias));
-		ffree(md_info->environ);
+			clearCommandHistory(&(md_info->alias));
+		mdFreeStrings(md_info->environ);
 		md_info->environ = NULL;
-		bfree((void **)md_info->cmd_buf);
+		mdFree((void **)md_info->cmd_buf);
 		if (md_info->md_readfd > 2)
 			close(md_info->md_readfd);
-		_putchar(BUF_FLUSH);
+		mdWriteCharacter(BUF_FLUSH);
 	}
 }

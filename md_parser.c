@@ -56,7 +56,7 @@ char *mdFindPath(md_info_t *info, char *pathstr, char *cmd)
 	if (!pathstr)
 		return (NULL);
 
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((mdStrlen(cmd) > 2) && mdStartsWith(cmd, "./"))
 	{
 		if (mdIsCommand(info, cmd))
 			return (cmd);
@@ -68,11 +68,11 @@ char *mdFindPath(md_info_t *info, char *pathstr, char *cmd)
 		{
 			path = mdDuplicateChars(pathstr, curr_pos, i);
 			if (!*path)
-				_strcat(path, cmd);
+				mdStrcat(path, cmd);
 			else
 			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
+				mdStrcat(path, "/");
+				mdStrcat(path, cmd);
 			}
 
 			if (mdIsCommand(info, path))

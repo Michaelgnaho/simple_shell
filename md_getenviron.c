@@ -11,7 +11,7 @@ char **md_get_environ(md_info_t *md_info)
 {
 	if (!md_info->environ || md_info->env_changed)
 	{
-		md_info->environ = list_to_strings(md_info->env);
+		md_info->environ = md_list_to_strings(md_info->env);
 		md_info->env_changed = 0;
 	}
 
@@ -36,10 +36,10 @@ int md_unsetenv(md_info_t *md_info, char *var)
 
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = mdStartsWith(node->str, var);
 		if (p && *p == '=')
 		{
-			md_info->env_changed = delete_node_at_index(&(md_info->env), i);
+			md_info->env_changed = deleteCommandAtIndex(&(md_info->env), i);
 			i = 0;
 			node = md_info->env;
 			continue;
@@ -68,16 +68,16 @@ int md_setenv(md_info_t *md_info, char *var, char *value)
 	if (!var || !value)
 		return (0);
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	buf = malloc(mdStrlen(var) + mdStrlen(value) + 2);
 	if (!buf)
 		return (1);
-	_strcpy(buf, var);
-	_strcat(buf, "=");
-	_strcat(buf, value);
+	mdCopyString(buf, var);
+	mdStrcat(buf, "=");
+	mdStrcat(buf, value);
 	node = md_info->env;
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = mdStartsWith(node->str, var);
 		if (p && *p == '=')
 		{
 			free(node->str);
@@ -87,7 +87,7 @@ int md_setenv(md_info_t *md_info, char *var, char *value)
 		}
 		node = node->next;
 	}
-	add_node_end(&(md_info->env), buf, 0);
+	addHistoryNodeEnd(&(md_info->env), buf, 0);
 	free(buf);
 	md_info->env_changed = 1;
 	return (0);
