@@ -167,9 +167,9 @@ int md_renumber_history(md_info_t *md_info);
 
 
 
-/************************************* DASURF FUNCTION PROTOTYPES *********************************************************/
-/**************************************************************************************************************************/
-/**************************************************************************************************************************/
+/**********************************************************/
+/************* DASURF FUNCTION PROTOTYPES *****************/
+/**********************************************************/
 
 
 
@@ -208,7 +208,7 @@ char *mdMemset(char *str, char d, unsigned int num);
 int mdShellLoop(md_info_t *mdInfo, char **mdAv);
 int mdFindBuiltin(md_info_t *mdInfo);
 void mdFindCmd(md_info_t *mdInfo);
-void mdForkCmd(info_t *mdInfo);
+void mdForkCmd(md_info_t *mdInfo);
 
 /* md_string.c prototypes */
 int mdStrlen(char *str);
@@ -227,11 +227,11 @@ char **mdSplitString(char *str, char *delimiter);
 char **mdSplitString2(char *str, char delimiter);
 
 /* md_vars.c prototypes */
-int is_chain(md_info_t *info, char *buf, size_t *p);
-void check_chain(md_info_t *info, char *buf, size_t *p, size_t i, size_t len);
-int replace_alias(md_info_t *info);
-int replace_vars(md_info_t *info);
-int replace_string(char **old, char *new);
+int mdIsChainDelimiter(md_info_t *info, char *buf, size_t *p);
+void mdCheckChain(md_info_t *info, char *buf, size_t *p, size_t i, size_t len);
+int mdReplaceAlias(md_info_t *info);
+int mdReplaceVars(md_info_t *info);
+int mdReplaceString(char **old, char *new);
 
 
 #endif  /* SHELL_H */

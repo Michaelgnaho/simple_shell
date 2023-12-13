@@ -10,36 +10,37 @@
  */
 void md_puts_err(char *str)
 {
-    int i = 0;
+	int i = 0;
 
-    if (!str)
-        return;
-    while (str[i] != '\0')
-    {
-        md_put_err_char(str[i]);
-        i++;
-    }
+	if (!str)
+		return;
+	while (str[i] != '\0')
+	{
+		md_put_err_char(str[i]);
+		i++;
+	}
 }
 
 /**
  * md_put_err_char - Writes the character to the error stream.
  * @c: The character to print.
  *
- * Return: On success, returns 1. On error, returns -1, and sets errno appropriately.
+ * Return: On success, returns 1. On error, returns -1, and sets
+ *			errno appropriately.
  */
 int md_put_err_char(char c)
 {
-    static int i;
-    static char buf[WRITE_BUF_SIZE];
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-    if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
-    {
-        write(2, buf, i);
-        i = 0;
-    }
-    if (c != BUF_FLUSH)
-        buf[i++] = c;
-    return 1;
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(2, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
 
 /**
@@ -47,21 +48,22 @@ int md_put_err_char(char c)
  * @c: The character to print.
  * @fd: The file descriptor to write to.
  *
- * Return: On success, returns 1. On error, returns -1, and sets errno appropriately.
+ * Return: On success, returns 1. On error, returns -1,
+ *			and sets errno appropriately.
  */
 int md_putfd(char c, int fd)
 {
-    static int i;
-    static char buf[WRITE_BUF_SIZE];
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-    if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
-    {
-        write(fd, buf, i);
-        i = 0;
-    }
-    if (c != BUF_FLUSH)
-        buf[i++] = c;
-    return 1;
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(fd, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
 
 /**
@@ -73,13 +75,13 @@ int md_putfd(char c, int fd)
  */
 int md_putsfd(char *str, int fd)
 {
-    int i = 0;
+	int i = 0;
 
-    if (!str)
-        return 0;
-    while (*str)
-    {
-        i += md_putfd(*str++, fd);
-    }
-    return i;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		i += md_putfd(*str++, fd);
+	}
+	return (i);
 }

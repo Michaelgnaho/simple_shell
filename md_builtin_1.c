@@ -10,8 +10,8 @@
  */
 int md_display_history(md_info_t *md_info)
 {
-    print_list(md_info->history);
-    return 0;
+	print_list(md_info->history);
+	return (0);
 }
 
 /**
@@ -23,15 +23,15 @@ int md_display_history(md_info_t *md_info)
  */
 int md_unset_alias(md_info_t *md_info, char *str)
 {
-    char *p;
-    int ret;
+	char *p;
+	int ret;
 
-    p = _strchr(str, '=');
-    if (!p)
-        return 1;
-    ret = delete_node_at_index(&(md_info->alias),
-                               get_node_index(md_info->alias, node_starts_with(md_info->alias, str, -1)));
-    return ret;
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	ret = delete_node_at_index(&(md_info->alias),
+			get_node_index(md_info->alias, node_starts_with(md_info->alias, str, -1)));
+	return (ret);
 }
 
 /**
@@ -43,16 +43,16 @@ int md_unset_alias(md_info_t *md_info, char *str)
  */
 int md_set_alias(md_info_t *md_info, char *str)
 {
-    char *p;
+	char *p;
 
-    p = _strchr(str, '=');
-    if (!p)
-        return 1;
-    if (!*++p)
-        return md_unset_alias(md_info, str);
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	if (!*++p)
+		return (md_unset_alias(md_info, str));
 
-    md_unset_alias(md_info, str);
-    return (add_node_end(&(md_info->alias), str, 0) == NULL);
+	md_unset_alias(md_info, str);
+	return (add_node_end(&(md_info->alias), str, 0) == NULL);
 }
 
 /**
@@ -63,19 +63,19 @@ int md_set_alias(md_info_t *md_info, char *str)
  */
 int md_print_alias(list_t *node)
 {
-    char *p = NULL, *a = NULL;
+	char *p = NULL, *a = NULL;
 
-    if (node)
-    {
-        p = _strchr(node->str, '=');
-        for (a = node->str; a <= p; a++)
-            _putchar(*a);
-        _putchar('\'');
-        _puts(p + 1);
-        _puts("'\n");
-        return 0;
-    }
-    return 1;
+	if (node)
+	{
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			_putchar(*a);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
+		return (0);
+	}
+	return (1);
 }
 
 /**
@@ -86,28 +86,28 @@ int md_print_alias(list_t *node)
  */
 int md_alias(md_info_t *md_info)
 {
-    int i = 0;
-    char *p = NULL;
-    list_t *node = NULL;
+	int i = (0);
+	char *p = NULL;
+	list_t *node = NULL;
 
-    if (md_info->argc == 1)
-    {
-        node = md_info->alias;
-        while (node)
-        {
-            md_print_alias(node);
-            node = node->next;
-        }
-        return 0;
-    }
-    for (i = 1; md_info->argv[i]; i++)
-    {
-        p = _strchr(md_info->argv[i], '=');
-        if (p)
-            md_set_alias(md_info, md_info->argv[i]);
-        else
-            md_print_alias(node_starts_with(md_info->alias, md_info->argv[i], '='));
-    }
+	if (md_info->argc == 1)
+	{
+		node = md_info->alias;
+		while (node)
+		{
+			md_print_alias(node);
+			node = node->next;
+		}
+		return (0);
+	}
+	for (i = 1; md_info->argv[i]; i++)
+	{
+		p = _strchr(md_info->argv[i], '=');
+		if (p)
+			md_set_alias(md_info, md_info->argv[i]);
+		else
+			md_print_alias(node_starts_with(md_info->alias, md_info->argv[i], '='));
+	}
 
-    return 0;
+	return (0);
 }

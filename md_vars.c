@@ -1,14 +1,15 @@
 #include "shell.h"
 
 /**
- * is_chain - test if current char in buffer is a chain delimeter
+ * mdIsChainDelimiter - checks if the current character in the buffer
+ *						is a chain delimiter
  * @info: the parameter struct
  * @buf: the char buffer
- * @p: address of current position in buf
+ * @p: address of the current position in buf
  *
- * Return: 1 if chain delimeter, 0 otherwise
+ * Return: 1 if it's a chain delimiter, 0 otherwise
  */
-int is_chain(md_info_t *info, char *buf, size_t *p)
+int mdIsChainDelimiter(md_info_t *info, char *buf, size_t *p)
 {
 	size_t j = *p;
 
@@ -24,7 +25,7 @@ int is_chain(md_info_t *info, char *buf, size_t *p)
 		j++;
 		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';') /* found end of this command */
+	else if (buf[j] == ';') /* found the end of this command */
 	{
 		buf[j] = 0; /* replace semicolon with null */
 		info->cmd_buf_type = CMD_CHAIN;
@@ -36,16 +37,17 @@ int is_chain(md_info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
+ * mdCheckChain - checks if we should continue chaining based on the
+ *					last status
  * @info: the parameter struct
  * @buf: the char buffer
- * @p: address of current position in buf
+ * @p: address of the current position in buf
  * @i: starting position in buf
  * @len: length of buf
  *
  * Return: Void
  */
-void check_chain(md_info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void mdCheckChain(md_info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
 	size_t j = *p;
 
@@ -70,12 +72,12 @@ void check_chain(md_info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
- * replace_alias - replaces an aliases in the tokenized string
+ * mdReplaceAlias - replaces aliases in the tokenized string
  * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_alias(md_info_t *info)
+int mdReplaceAlias(md_info_t *info)
 {
 	int i;
 	list_t *node;
@@ -83,14 +85,14 @@ int replace_alias(md_info_t *info)
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = mdNodeStartsWith(info->alias, info->argv[0], '=');
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		p = _strchr(node->str, '=');
+		p = mdStrchr(node->str, '=');
 		if (!p)
 			return (0);
-		p = _strdup(p + 1);
+		p = mdStrdup(p + 1);
 		if (!p)
 			return (0);
 		info->argv[0] = p;
@@ -99,12 +101,12 @@ int replace_alias(md_info_t *info)
 }
 
 /**
- * replace_vars - replaces vars in the tokenized string
+ * mdReplaceVars - replaces variables in the tokenized string
  * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_vars(md_info_t *info)
+int mdReplaceVars(md_info_t *info)
 {
 	int i = 0;
 	list_t *node;
@@ -114,39 +116,38 @@ int replace_vars(md_info_t *info)
 		if (info->argv[i][0] != '$' || !info->argv[i][1])
 			continue;
 
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!mdStrcmp(info->argv[i], "$?"))
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
+			mdReplaceString(&(info->argv[i]),
+				mdStrdup(mdConvertNumber(info->status, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!mdStrcmp(info->argv[i], "$$"))
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(getpid(), 10, 0)));
+			mdReplaceString(&(info->argv[i]),
+				mdStrdup(mdConvertNumber(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = mdNodeStartsWith(info->env, &info->argv[i][1], '=');
 		if (node)
 		{
-			replace_string(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
+			mdReplaceString(&(info->argv[i]),
+				mdStrdup(mdStrchr(node->str, '=') + 1));
 			continue;
 		}
-		replace_string(&info->argv[i], _strdup(""));
-
+		mdReplaceString(&info->argv[i], mdStrdup(""));
 	}
 	return (0);
 }
 
 /**
- * replace_string - replaces string
- * @old: address of old string
+ * mdReplaceString - replaces a string
+ * @old: address of the old string
  * @new: new string
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_string(char **old, char *new)
+int mdReplaceString(char **old, char *new)
 {
 	free(*old);
 	*old = new;
