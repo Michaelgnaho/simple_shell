@@ -7,7 +7,7 @@
  *
  * Return: 1 if true, 0 otherwise
  */
-int mdIsCommand(info_t *info, char *path)
+int mdIsCommand(md_info_t *info, char *path)
 {
 	struct stat st;
 
@@ -50,7 +50,7 @@ char *mdDuplicateChars(char *pathstr, int start, int stop)
  *
  * Return: full path of the command if found, or NULL
  */
-char *mdFindPath(info_t *info, char *pathstr, char *cmd)
+char *mdFindPath(md_info_t *info, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *path;

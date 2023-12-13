@@ -7,7 +7,7 @@
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int mdShellLoop(info_t *mdInfo, char **mdAv)
+int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 {
 	ssize_t inputResult = 0;
 	int builtinResult = 0;
@@ -52,7 +52,7 @@ int mdShellLoop(info_t *mdInfo, char **mdAv)
  *         1 if builtin found but not successful,
  *         -2 if builtin signals exit()
  */
-int mdFindBuiltin(info_t *mdInfo)
+int mdFindBuiltin(md_info_t *mdInfo)
 {
 	int i, builtinResult = -1;
 	builtinTable builtintbl[] = {
@@ -70,7 +70,7 @@ int mdFindBuiltin(info_t *mdInfo)
 	for (i = 0; builtintbl[i].type; i++)
 		if (_strcmp(mdInfo->argv[0], builtintbl[i].type) == 0)
 		{
-			mdInfo->lineCount++;
+			mdInfo->line_count++;
 			builtinResult = builtintbl[i].func(mdInfo);
 			break;
 		}
@@ -83,16 +83,16 @@ int mdFindBuiltin(info_t *mdInfo)
  *
  * Return: void
  */
-void mdFindCmd(info_t *mdInfo)
+void mdFindCmd(md_info_t *mdInfo)
 {
 	char *path = NULL;
 	int i, k;
 
 	mdInfo->path = mdInfo->argv[0];
-	if (mdInfo->lineCountFlag == 1)
+	if (mdInfo->linecount_flag == 1)
 	{
-		mdInfo->lineCount++;
-		mdInfo->lineCountFlag = 0;
+		mdInfo->line_count++;
+		mdInfo->linecount_flag = 0;
 	}
 	for (i = 0, k = 0; mdInfo->arg[i]; i++)
 		if (!mdIsDelim(mdInfo->arg[i], " \t\n"))
@@ -125,7 +125,7 @@ void mdFindCmd(info_t *mdInfo)
  *
  * Return: void
  */
-void mdForkCmd(info_t *mdInfo)
+void mdForkCmd(md_info_t *mdInfo)
 {
 	pid_t childPid;
 

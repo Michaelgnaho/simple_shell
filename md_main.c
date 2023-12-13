@@ -9,7 +9,7 @@
  */
 int mdMain(int ac, char **av)
 {
-	info_t info[] = { INFO_INIT };
+	md_info_t info[] = { INFO_INIT };
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
@@ -35,7 +35,7 @@ int mdMain(int ac, char **av)
 			}
 			return (EXIT_FAILURE);
 		}
-		info->readfd = fd;
+		info->md_readfd = fd;
 	}
 	populate_env_list(info);
 	read_history(info);

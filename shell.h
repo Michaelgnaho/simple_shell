@@ -167,9 +167,6 @@ int md_renumber_history(md_info_t *md_info);
 
 
 
-
-
-
 /************************************* DASURF FUNCTION PROTOTYPES *********************************************************/
 /**************************************************************************************************************************/
 /**************************************************************************************************************************/
@@ -197,8 +194,8 @@ int mdFree(void **ptr);
 
 
 /* md_parser.c prototypes */
-char *mdFindPath(info_t *info, char *pathstr, char *cmd);
-int mdIsCommand(info_t *info, char *path);
+char *mdFindPath(md_info_t *info, char *pathstr, char *cmd);
+int mdIsCommand(md_info_t *info, char *path);
 char *mdDuplicateChars(char *pathstr, int start, int stop);
 
 
@@ -208,9 +205,9 @@ void *mdReallocateMemory(void *ptr, unsigned int oldSize, unsigned int newSize);
 char *mdMemset(char *str, char d, unsigned int num);
 
 /* md_shell_loop.c prototypes */
-int mdShellLoop(info_t *mdInfo, char **mdAv);
-int mdFindBuiltin(info_t *mdInfo);
-void mdFindCmd(info_t *mdInfo);
+int mdShellLoop(md_info_t *mdInfo, char **mdAv);
+int mdFindBuiltin(md_info_t *mdInfo);
+void mdFindCmd(md_info_t *mdInfo);
 void mdForkCmd(info_t *mdInfo);
 
 /* md_string.c prototypes */
@@ -224,5 +221,17 @@ char *mdCopyString(char *destination, char *source);
 char *mdStringDuplicate(const char *str);
 void mdPrintString(char *str);
 int mdWriteCharacter(char character);
+
+/* md_tokenizer.c prototypes */
+char **mdSplitString(char *str, char *delimiter);
+char **mdSplitString2(char *str, char delimiter);
+
+/* md_vars.c prototypes */
+int is_chain(md_info_t *info, char *buf, size_t *p);
+void check_chain(md_info_t *info, char *buf, size_t *p, size_t i, size_t len);
+int replace_alias(md_info_t *info);
+int replace_vars(md_info_t *info);
+int replace_string(char **old, char *new);
+
 
 #endif  /* SHELL_H */
