@@ -20,8 +20,13 @@ int md_is_interactive(md_info_t *md_info)
 int md_is_delimiter(char c, char *delim)
 {
 	while (*delim)
+<<<<<<< HEAD
 	if (*delim++ == c)
 		return (1);
+=======
+		if (*delim++ == c)
+			return (1);
+>>>>>>> 32aa8b7a71c94dab6a1a137bae5faf735e1a6ddf
 	return (0);
 }
 
@@ -32,7 +37,11 @@ int md_is_delimiter(char c, char *delim)
  */
 int md_is_alpha(int c)
 {
+<<<<<<< HEAD
 return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+=======
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+>>>>>>> 32aa8b7a71c94dab6a1a137bae5faf735e1a6ddf
 }
 
 /**
@@ -49,6 +58,7 @@ int md_atoi(char *s)
 	{
 		if (s[i] == '-')
 			md_sign *= -1;
+<<<<<<< HEAD
 	if (s[i] >= '0' && s[i] <= '9')
 	{
 		md_flag = 1;
@@ -60,5 +70,20 @@ int md_atoi(char *s)
 	}
 	md_output = (md_sign == -1) ? -md_result : md_result;
 
+=======
+
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			md_flag = 1;
+			md_result *= 10;
+			md_result += (s[i] - '0');
+		}
+		else if (md_flag == 1)
+			md_flag = 2;
+	}
+
+	md_output = (md_sign == -1) ? -md_result : md_result;
+
+>>>>>>> 32aa8b7a71c94dab6a1a137bae5faf735e1a6ddf
 	return (md_output);
 }

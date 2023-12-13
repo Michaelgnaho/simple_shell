@@ -26,7 +26,7 @@ list_t *addHistoryNode(list_t **historyHead, const char *command, int index)
 
 	if (command)
 	{
-		newHistoryNode->str = _strdup(command);
+		newHistoryNode->str = mdStringDuplicate(command);
 		if (!newHistoryNode->str)
 		{
 			free(newHistoryNode);
@@ -66,7 +66,7 @@ list_t *addHistoryNodeEnd(list_t **historyHead, const char *command, int index)
 
 	if (command)
 	{
-		newHistoryNode->str = _strdup(command);
+		newHistoryNode->str = mdStringDuplicate(command);
 		if (!newHistoryNode->str)
 		{
 			free(newHistoryNode);
@@ -99,8 +99,8 @@ size_t printCommandHistory(const list_t *history)
 
 	while (history)
 	{
-		_puts(history->str ? history->str : "(nil)");
-		_puts("\n");
+		mdPrintString(history->str ? history->str : "(nil)");
+		mdPrintString("\n");
 		history = history->next;
 		count++;
 	}

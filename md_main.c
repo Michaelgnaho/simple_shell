@@ -9,7 +9,7 @@
  */
 int mdMain(int ac, char **av)
 {
-	info_t info[] = { INFO_INIT };
+	md_info_t info[] = { INFO_INIT };
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
@@ -26,16 +26,16 @@ int mdMain(int ac, char **av)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				_eputs(av[0]);
-				_eputs(": 0: Can't open ");
-				_eputs(av[1]);
-				_eputchar('\n');
-				_eputchar(BUF_FLUSH);
+				md_puts_err(av[0]);
+				md_puts_err(": 0: Can't open ");
+				md_puts_err(av[1]);
+				md_put_err_char('\n');
+				md_put_err_char(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
 		}
-		info->readfd = fd;
+		info->md_readfd = fd;
 	}
 	populate_env_list(info);
 	read_history(info);

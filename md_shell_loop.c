@@ -7,7 +7,7 @@
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int mdShellLoop(info_t *mdInfo, char **mdAv)
+int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 {
 	ssize_t inputResult = 0;
 	int builtinResult = 0;
@@ -27,7 +27,7 @@ int mdShellLoop(info_t *mdInfo, char **mdAv)
 				mdFindCmd(mdInfo);
 		}
 		else if (mdInteractive(mdInfo))
-			_putchar('\n');
+			mdWriteCharacter('\n');
 		mdFreeInfo(mdInfo, 0);
 	}
 	mdWriteHistory(mdInfo);
@@ -36,9 +36,9 @@ int mdShellLoop(info_t *mdInfo, char **mdAv)
 		exit(mdInfo->status);
 	if (builtinResult == -2)
 	{
-		if (mdInfo->errNum == -1)
+		if (mdInfo->err_num == -1)
 			exit(mdInfo->status);
-		exit(mdInfo->errNum);
+		exit(mdInfo->err_num);
 	}
 	return (builtinResult);
 }
@@ -52,14 +52,14 @@ int mdShellLoop(info_t *mdInfo, char **mdAv)
  *         1 if builtin found but not successful,
  *         -2 if builtin signals exit()
  */
-int mdFindBuiltin(info_t *mdInfo)
+int mdFindBuiltin(md_info_t *mdInfo)
 {
 	int i, builtinResult = -1;
-	builtinTable builtintbl[] = {
+	builtin_table builtintbl[] = {
 		{"exit", md_exit},
-		{"env", md_env},
+		{"env", md_display_env},
 		{"help", md_help},
-		{"history", md_history},
+		{"history", md_display_history},
 		{"setenv", md_setenv},
 		{"unsetenv", md_unsetenv},
 		{"cd", md_cd},
@@ -70,7 +70,7 @@ int mdFindBuiltin(info_t *mdInfo)
 	for (i = 0; builtintbl[i].type; i++)
 		if (_strcmp(mdInfo->argv[0], builtintbl[i].type) == 0)
 		{
-			mdInfo->lineCount++;
+			mdInfo->line_count++;
 			builtinResult = builtintbl[i].func(mdInfo);
 			break;
 		}
@@ -83,16 +83,16 @@ int mdFindBuiltin(info_t *mdInfo)
  *
  * Return: void
  */
-void mdFindCmd(info_t *mdInfo)
+void mdFindCmd(md_info_t *mdInfo)
 {
 	char *path = NULL;
 	int i, k;
 
 	mdInfo->path = mdInfo->argv[0];
-	if (mdInfo->lineCountFlag == 1)
+	if (mdInfo->linecount_flag == 1)
 	{
-		mdInfo->lineCount++;
-		mdInfo->lineCountFlag = 0;
+		mdInfo->line_count++;
+		mdInfo->linecount_flag = 0;
 	}
 	for (i = 0, k = 0; mdInfo->arg[i]; i++)
 		if (!mdIsDelim(mdInfo->arg[i], " \t\n"))
@@ -125,7 +125,7 @@ void mdFindCmd(info_t *mdInfo)
  *
  * Return: void
  */
-void mdForkCmd(info_t *mdInfo)
+void mdForkCmd(md_info_t *mdInfo)
 {
 	pid_t childPid;
 
