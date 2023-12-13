@@ -128,7 +128,7 @@ int md_putsfd(char *str, int fd);
 
 /*md_error_1.c*/
 int md_erratoi(char *s);
-void md_print_error(info_t *info, char *estr);
+void md_print_error(md_info_t *info, char *estr);
 int md_print_d(int input, int fd);
 char *md_convert_number(long int num, int base, int flags);
 void md_remove_comments(char *buf);
