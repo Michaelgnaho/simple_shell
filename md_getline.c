@@ -150,7 +150,8 @@ int md_get_line(md_info_t *md_info, char **ptr, size_t *length)
 
 	c = mdStrchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = mdReallocateMemory(p, total_bytes, total_bytes ? total_bytes + k : k + 1);
+	new_p = mdReallocateMemory(p, total_bytes, total_bytes ?
+	total_bytes + k : k + 1);
 
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? (free(p), -1) : -1);

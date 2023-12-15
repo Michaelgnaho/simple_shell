@@ -29,8 +29,8 @@ int md_unset_alias(md_info_t *md_info, char *str)
 	p = mdStrchr(str, '=');
 	if (!p)
 		return (1);
-	ret = deleteCommandAtIndex(&(md_info->alias),
-			md_get_node_index(md_info->alias, mdNodeStartsWith(md_info->alias, str, -1)));
+	ret = deleteCommandAtIndex(&(md_info->alias), md_get_node_index(md_info->alias,
+			mdNodeStartsWith(md_info->alias, str, -1)));
 	return (ret);
 }
 

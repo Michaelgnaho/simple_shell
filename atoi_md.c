@@ -48,7 +48,7 @@ int md_atoi(char *s)
 	{
 		if (s[i] == '-')
 			md_sign *= -1;
-			
+
 		if (s[i] >= '0' && s[i] <= '9')
 		{
 			md_flag = 1;

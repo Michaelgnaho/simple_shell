@@ -12,17 +12,16 @@ char *mdCopyString(char *destination, char *source)
 	int index = 0;
 
 	if (destination == source || source == NULL)
-		return destination;
+		return (destination);
 
 	while (source[index])
 	{
 		destination[index] = source[index];
 		index++;
 	}
-	
 
 	destination[index] = 0;
-	return destination;
+	return (destination);
 }
 
 /**
@@ -37,7 +36,7 @@ char *mdStrdup(const char *str)
 	char *result;
 
 	if (str == NULL)
-		return NULL;
+		return (NULL);
 
 	while (*str++)
 		length++;
@@ -45,12 +44,12 @@ char *mdStrdup(const char *str)
 	result = malloc(sizeof(char) * (length + 1));
 
 	if (!result)
-		return NULL;
+		return (NULL);
 
 	for (length++; length--;)
 		result[length] = *--str;
 
-	return result;
+	return (result);
 }
 
 /**
@@ -94,5 +93,5 @@ int mdWriteCharacter(char character)
 	if (character != BUF_FLUSH)
 		buffer[index++] = character;
 
-	return 1;
+	return (1);
 }
