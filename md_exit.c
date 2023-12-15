@@ -66,13 +66,13 @@ char *md_strncat(char *dest, char *src, int n)
 }
 
 /**
- * md_strchr - locates a character in a string
+ * mdStrchr - locates a character in a string
  * @s: the string to search
  * @c: the character to find
  * Return: a pointer to the first occurrence of 'c' in 's', or NULL
  *			if not found
  */
-char *md_strchr(char *s, char c)
+char *mdStrchr(char *s, char c)
 {
 	do {
 		/* Check if the current character in 's' is equal to 'c' */

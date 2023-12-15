@@ -14,10 +14,10 @@ int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 
 	while (inputResult != -1 && builtinResult != -2)
 	{
-		mdClearInfo(mdInfo);
-		if (mdInteractive(mdInfo))
-			_puts("$ ");
-		_eputchar(BUF_FLUSH);
+		md_clear_info(mdInfo);
+		if (md_is_interactive(mdInfo))
+			mdPrintString("Micheal_Dare_SHELL$ ");
+		md_eputchar(BUF_FLUSH);
 		inputResult = mdGetInput(mdInfo);
 		if (inputResult != -1)
 		{
@@ -26,13 +26,13 @@ int mdShellLoop(md_info_t *mdInfo, char **mdAv)
 			if (builtinResult == -1)
 				mdFindCmd(mdInfo);
 		}
-		else if (mdInteractive(mdInfo))
+		else if (md_is_interactive(mdInfo))
 			mdWriteCharacter('\n');
 		mdFreeInfo(mdInfo, 0);
 	}
 	mdWriteHistory(mdInfo);
 	mdFreeInfo(mdInfo, 1);
-	if (!mdInteractive(mdInfo) && mdInfo->status)
+	if (!md_is_interactive(mdInfo) && mdInfo->status)
 		exit(mdInfo->status);
 	if (builtinResult == -2)
 	{
@@ -60,15 +60,15 @@ int mdFindBuiltin(md_info_t *mdInfo)
 		{"env", md_display_env},
 		{"help", md_help},
 		{"history", md_display_history},
-		{"setenv", md_setenv},
-		{"unsetenv", md_unsetenv},
+		{"setenv", md_set_env},
+		{"unsetenv", md_unset_env},
 		{"cd", md_cd},
 		{"alias", md_alias},
 		{NULL, NULL}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(mdInfo->argv[0], builtintbl[i].type) == 0)
+		if (mdStrcmp(mdInfo->argv[0], builtintbl[i].type) == 0)
 		{
 			mdInfo->line_count++;
 			builtinResult = builtintbl[i].func(mdInfo);
@@ -100,7 +100,7 @@ void mdFindCmd(md_info_t *mdInfo)
 	if (!k)
 		return;
 
-	path = mdFindPath(mdInfo, _getenv(mdInfo, "PATH="), mdInfo->argv[0]);
+	path = mdFindPath(mdInfo, md_get_env(mdInfo, "PATH="), mdInfo->argv[0]);
 	if (path)
 	{
 		mdInfo->path = path;
@@ -108,8 +108,8 @@ void mdFindCmd(md_info_t *mdInfo)
 	}
 	else
 	{
-		if ((mdInteractive(mdInfo) || _getenv(mdInfo, "PATH=")
-			|| mdInfo->argv[0][0] == '/') && mdIsCmd(mdInfo, mdInfo->argv[0]))
+		if ((md_is_interactive(mdInfo) || md_get_env(mdInfo, "PATH=")
+			|| mdInfo->argv[0][0] == '/') && mdIsCommand(mdInfo, mdInfo->argv[0]))
 			mdForkCmd(mdInfo);
 		else if (*(mdInfo->arg) != '\n')
 		{

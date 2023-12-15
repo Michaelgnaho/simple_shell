@@ -68,7 +68,7 @@ size_t md_print_list(const list_t *h)
 
 	while (h)
 	{
-		mdPrintString(convert_number(h->num, 10, 0));
+		mdPrintString(mdConvertNumber(h->num, 10, 0));
 		mdWriteCharacter(':');
 		mdWriteCharacter(' ');
 		mdPrintString(h->str ? h->str : "(nil)");
@@ -80,14 +80,14 @@ size_t md_print_list(const list_t *h)
 }
 
 /**
- * md_node_starts_with - returns the node whose string starts with a prefix
+ * mdNodeStartsWith - returns the node whose string starts with a prefix
  * @node: pointer to the list head
  * @prefix: string to match
  * @c: the next character after the prefix to match
  *
  * Return: matching node or null
  */
-list_t *md_node_starts_with(list_t *node, char *prefix, char c)
+list_t *mdNodeStartsWith(list_t *node, char *prefix, char c)
 {
 	char *p = NULL;
 

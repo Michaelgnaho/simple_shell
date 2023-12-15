@@ -26,12 +26,12 @@ char *mdCopyString(char *destination, char *source)
 }
 
 /**
- * mdStringDuplicate - duplicates a string
+ * mdStrdup - duplicates a string
  * @str: the string to duplicate
  *
  * Return: pointer to the duplicated string
  */
-char *mdStringDuplicate(const char *str)
+char *mdStrdup(const char *str)
 {
 	int length = 0;
 	char *result;

@@ -1,7 +1,5 @@
 #include "shell.h"
 
-#include "shell.h"
-
 /**
  * md_display_env - Prints the current environment variables.
  * @md_info: Structure containing potential arguments.
@@ -47,7 +45,7 @@ int md_set_env(md_info_t *md_info)
 {
 	if (md_info->argc != 3)
 	{
-		md_puts_err("Incorrect number of arguments\n");
+		md_eputs("Incorrect number of arguments\n");
 		return (1);
 	}
 	if (md_setenv(md_info, md_info->argv[1], md_info->argv[2]))
@@ -67,7 +65,7 @@ int md_unset_env(md_info_t *md_info)
 
 	if (md_info->argc == 1)
 	{
-		md_puts_err("Too few arguments.\n");
+		md_eputs("Too few arguments.\n");
 		return (1);
 	}
 	for (i = 1; i <= md_info->argc; i++)

@@ -31,21 +31,21 @@ int md_erratoi(char *s)
 }
 
 /**
- * md_print_error - Prints an error message.
+ * mdPrintError - Prints an error message.
  * @info: The parameter and return information struct.
  * @estr: String containing the specified error type.
  *
  * Return: Nothing.
  */
-void md_print_error(md_info_t *info, char *estr)
+void mdPrintError(md_info_t *info, char *estr)
 {
-	md_puts_err(info->fname);
-	md_puts_err(": ");
+	md_eputs(info->fname);
+	md_eputs(": ");
 	md_print_d(info->line_count, STDERR_FILENO);
-	md_puts_err(": ");
-	md_puts_err(info->argv[0]);
-	md_puts_err(": ");
-	md_puts_err(estr);
+	md_eputs(": ");
+	md_eputs(info->argv[0]);
+	md_eputs(": ");
+	md_eputs(estr);
 }
 
 /**
@@ -62,7 +62,7 @@ int md_print_d(int input, int fd)
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		__putchar = md_put_err_char;
+		__putchar = md_eputchar;
 	if (input < 0)
 	{
 		_abs_ = -input;
@@ -88,14 +88,14 @@ int md_print_d(int input, int fd)
 }
 
 /**
- * md_convert_number - Converter function, a clone of itoa.
+ * mdConvertNumber - Converter function, a clone of itoa.
  * @num: The number to convert.
  * @base: The base for conversion.
  * @flags: Argument flags.
  *
  * Return: The converted string.
  */
-char *md_convert_number(long int num, int base, int flags)
+char *mdConvertNumber(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];

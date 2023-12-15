@@ -21,12 +21,12 @@ list_t *addHistoryNode(list_t **historyHead, const char *command, int index)
 	if (!newHistoryNode)
 		return (NULL);
 
-	_memset((void *)newHistoryNode, 0, sizeof(list_t));
+	mdMemset((void *)newHistoryNode, 0, sizeof(list_t));
 	newHistoryNode->num = index;
 
 	if (command)
 	{
-		newHistoryNode->str = mdStringDuplicate(command);
+		newHistoryNode->str = mdStrdup(command);
 		if (!newHistoryNode->str)
 		{
 			free(newHistoryNode);
@@ -61,12 +61,12 @@ list_t *addHistoryNodeEnd(list_t **historyHead, const char *command, int index)
 	if (!newHistoryNode)
 		return (NULL);
 
-	_memset((void *)newHistoryNode, 0, sizeof(list_t));
+	mdMemset((void *)newHistoryNode, 0, sizeof(list_t));
 	newHistoryNode->num = index;
 
 	if (command)
 	{
-		newHistoryNode->str = mdStringDuplicate(command);
+		newHistoryNode->str = mdStrdup(command);
 		if (!newHistoryNode->str)
 		{
 			free(newHistoryNode);

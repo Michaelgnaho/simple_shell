@@ -38,16 +38,6 @@
 
 extern char **environ;
 
-/*
- * these are the funcion prototypes
- */
-
-void printf_md(const char *stringmd);
-void dis_prompt(void);
-void execute_cmd(const char *cmd);
-void read_cmd(char *cmd, size_t size);
-int main(void);
-
 /**
  * struct liststr - singly linked list
  * @num: the number field
@@ -89,15 +79,19 @@ typedef struct passinfo
 	0, 0, 0}
 
 
-	typedef struct builtin
+typedef struct builtin
 {
 	char *type;
 	int (*func)(md_info_t *);
 } builtin_table;
 
+
+/* function prototype for md_main.c */
+int main(int ac, char **av);
+
 /*for atoi_md.c*/
 int md_is_interactive(md_info_t *md_info);
-int md_is_delimiter(char c, char *delim);
+int mdIsDelim(char c, char *delim);
 int md_is_alpha(int c);
 int md_atoi(char *s);
 
@@ -120,6 +114,12 @@ int md_set_env(md_info_t *md_info);
 int md_unset_env(md_info_t *md_info);
 int md_populate_env_list(md_info_t *md_info);
 
+
+/* md_getenviron.c */
+char **mdGetEnviron(md_info_t *md_info);
+int md_unsetenv(md_info_t *md_info, char *var);
+int md_setenv(md_info_t *md_info, char *var, char *value);
+
 /*md_error.c*/
 void md_eputs(char *str);
 int md_eputchar(char c);
@@ -128,38 +128,32 @@ int md_putsfd(char *str, int fd);
 
 /*md_error_1.c*/
 int md_erratoi(char *s);
-void md_print_error(md_info_t *info, char *estr);
+void mdPrintError(md_info_t *info, char *estr);
 int md_print_d(int input, int fd);
-char *md_convert_number(long int num, int base, int flags);
+char *mdConvertNumber(long int num, int base, int flags);
 void md_remove_comments(char *buf);
 
 /*md_exit.c*/
 char *md_strncpy(char *dest, char *src, int n);
 char *md_strncat(char *dest, char *src, int n);
-char *md_strchr(char *s, char c);
+char *mdStrchr(char *s, char c);
 
 /*md_getline.c*/
 ssize_t md_input_buffer(md_info_t *md_info, char **buf, size_t *len);
-ssize_t md_get_input(md_info_t *md_info);
+ssize_t mdGetInput(md_info_t *md_info);
 ssize_t md_read_buffer(md_info_t *md_info, char *buf, size_t *i);
 int md_get_line(md_info_t *md_info, char **ptr, size_t *length);
 void md_sigint_handler(__attribute__((unused))int sig_num);
 
 
-/* md_getenviron.c */
-
-char **md_get_environ(md_info_t *md_info);
-int md_unsetenv(md_info_t *md_info, char *var);
-int md_setenv(md_info_t *md_info, char *var, char *value);
-
 /* md_getinfo.c */
 void md_clear_info(md_info_t *md_info);
-void md_set_info(md_info_t *md_info, char **av);
-void md_free_info(md_info_t *md_info, int all);
+void mdSetInfo(md_info_t *md_info, char **av);
+void mdFreeInfo(md_info_t *md_info, int all);
 
 /* md_history.c */
 char *md_get_history_file(md_info_t *md_info);
-int md_write_history(md_info_t *md_info);
+int mdWriteHistory(md_info_t *md_info);
 int md_read_history(md_info_t *md_info);
 int md_build_history_list(md_info_t *md_info, char *buf, int linecount);
 int md_renumber_history(md_info_t *md_info);
@@ -185,7 +179,7 @@ void clearCommandHistory(list_t **historyHead);
 size_t md_list_length(const list_t *h);
 char **md_list_to_strings(list_t *head);
 size_t md_print_list(const list_t *h);
-list_t *md_node_starts_with(list_t *node, char *prefix, char c);
+list_t *mdNodeStartsWith(list_t *node, char *prefix, char c);
 ssize_t md_get_node_index(list_t *head, list_t *node);
 
 
@@ -218,7 +212,7 @@ char *mdStrcat(char *dest, char *src);
 
 /* md_string1.c prototypes */
 char *mdCopyString(char *destination, char *source);
-char *mdStringDuplicate(const char *str);
+char *mdStrdup(const char *str);
 void mdPrintString(char *str);
 int mdWriteCharacter(char character);
 

@@ -38,7 +38,7 @@ ssize_t md_input_buffer(md_info_t *md_info, char **buf, size_t *len)
 			md_remove_comments(*buf);
 			md_build_history_list(md_info, *buf, md_info->histcount++);
 
-			/* if (md_strchr(*buf, ';')) is this a command chain? */
+			/* if (mdStrchr(*buf, ';')) is this a command chain? */
 			{
 				*len = bytes_read;
 				md_info->cmd_buf = buf;
@@ -49,12 +49,12 @@ ssize_t md_input_buffer(md_info_t *md_info, char **buf, size_t *len)
 }
 
 /**
- * md_get_input - gets a line minus the newline
+ * mdGetInput - gets a line minus the newline
  * @md_info: structure containing shell information
  *
  * Return: bytes read
  */
-ssize_t md_get_input(md_info_t *md_info)
+ssize_t mdGetInput(md_info_t *md_info)
 {
 	static char *buf; /* the ';' command chain buffer */
 	static size_t i, j, len;
@@ -148,7 +148,7 @@ int md_get_line(md_info_t *md_info, char **ptr, size_t *length)
 	if (bytes_read == -1 || (bytes_read == 0 && len == 0))
 		return (-1);
 
-	c = md_strchr(buf + i, '\n');
+	c = mdStrchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
 	new_p = mdReallocateMemory(p, total_bytes, total_bytes ? total_bytes + k : k + 1);
 

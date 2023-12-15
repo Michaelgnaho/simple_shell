@@ -15,11 +15,11 @@ void md_clear_info(md_info_t *md_info)
 }
 
 /**
- * md_set_info - Initializes md_info_t struct
+ * mdSetInfo - Initializes md_info_t struct
  * @md_info: Struct address
  * @av: Argument vector
  */
-void md_set_info(md_info_t *md_info, char **av)
+void mdSetInfo(md_info_t *md_info, char **av)
 {
 	int i = 0;
 
@@ -32,7 +32,7 @@ void md_set_info(md_info_t *md_info, char **av)
 			md_info->argv = malloc(sizeof(char *) * 2);
 			if (md_info->argv)
 			{
-				md_info->argv[0] = mdStringDuplicate(md_info->arg);
+				md_info->argv[0] = mdStrdup(md_info->arg);
 				md_info->argv[1] = NULL;
 			}
 		}
@@ -46,11 +46,11 @@ void md_set_info(md_info_t *md_info, char **av)
 }
 
 /**
- * md_free_info - Frees md_info_t struct fields
+ * mdFreeInfo - Frees md_info_t struct fields
  * @md_info: Struct address
  * @all: True if freeing all fields
  */
-void md_free_info(md_info_t *md_info, int all)
+void mdFreeInfo(md_info_t *md_info, int all)
 {
 	mdFreeStrings(md_info->argv);
 	md_info->argv = NULL;

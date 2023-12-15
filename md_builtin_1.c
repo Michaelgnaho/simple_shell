@@ -26,11 +26,11 @@ int md_unset_alias(md_info_t *md_info, char *str)
 	char *p;
 	int ret;
 
-	p = md_strchr(str, '=');
+	p = mdStrchr(str, '=');
 	if (!p)
 		return (1);
 	ret = deleteCommandAtIndex(&(md_info->alias),
-			md_get_node_index(md_info->alias, md_node_starts_with(md_info->alias, str, -1)));
+			md_get_node_index(md_info->alias, mdNodeStartsWith(md_info->alias, str, -1)));
 	return (ret);
 }
 
@@ -45,7 +45,7 @@ int md_set_alias(md_info_t *md_info, char *str)
 {
 	char *p;
 
-	p = md_strchr(str, '=');
+	p = mdStrchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
@@ -67,7 +67,7 @@ int md_print_alias(list_t *node)
 
 	if (node)
 	{
-		p = md_strchr(node->str, '=');
+		p = mdStrchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
 			mdWriteCharacter(*a);
 		mdWriteCharacter('\'');
@@ -102,11 +102,11 @@ int md_alias(md_info_t *md_info)
 	}
 	for (i = 1; md_info->argv[i]; i++)
 	{
-		p = md_strchr(md_info->argv[i], '=');
+		p = mdStrchr(md_info->argv[i], '=');
 		if (p)
 			md_set_alias(md_info, md_info->argv[i]);
 		else
-			md_print_alias(md_node_starts_with(md_info->alias, md_info->argv[i], '='));
+			md_print_alias(mdNodeStartsWith(md_info->alias, md_info->argv[i], '='));
 	}
 
 	return (0);

@@ -3,7 +3,7 @@
 #include "shell.h"
 
 /**
- * md_puts_err - Prints an input string to the error stream.
+ * md_eputs - Prints an input string to the error stream.
  * @str: The string to be printed.
  *
  * Return: Nothing.
@@ -12,27 +12,17 @@ void md_eputs(char *str)
 {
 	int i = 0;
 
-<<<<<<< HEAD
-    if (!str)
-        return;
-    while (str[i] != '\0')
-    {
-        md_eputchar(str[i]);
-        i++;
-    }
-=======
 	if (!str)
 		return;
 	while (str[i] != '\0')
 	{
-		md_put_err_char(str[i]);
+		md_eputchar(str[i]);
 		i++;
 	}
->>>>>>> 32aa8b7a71c94dab6a1a137bae5faf735e1a6ddf
 }
 
 /**
- * md_put_err_char - Writes the character to the error stream.
+ * md_eputchar - Writes the character to the error stream.
  * @c: The character to print.
  *
  * Return: On success, returns 1. On error, returns -1, and sets

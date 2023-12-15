@@ -2,12 +2,12 @@
 
 
 /**
- * md_get_environ - returns the string array copy of the environment
+ * mdGetEnviron - returns the string array copy of the environment
  * @md_info: Structure containing potential arguments. Used to maintain
  *           constant function prototype.
  * Return: Always 0
  */
-char **md_get_environ(md_info_t *md_info)
+char **mdGetEnviron(md_info_t *md_info)
 {
 	if (!md_info->environ || md_info->env_changed)
 	{

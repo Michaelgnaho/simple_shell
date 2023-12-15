@@ -1,7 +1,5 @@
 #include "shell.h"
 
-#include "shell.h"
-
 /**
  * md_get_history_file - Retrieves the history file path
  * @md_info: Shell information struct
@@ -29,12 +27,12 @@ char *md_get_history_file(md_info_t *md_info)
 }
 
 /**
- * md_write_history - Creates or appends to the history file
+ * mdWriteHistory - Creates or appends to the history file
  * @md_info: Shell information struct
  *
  * Return: 1 on success, else -1
  */
-int md_write_history(md_info_t *md_info)
+int mdWriteHistory(md_info_t *md_info)
 {
 	ssize_t fd;
 	char *filename = md_get_history_file(md_info);
@@ -44,7 +42,7 @@ int md_write_history(md_info_t *md_info)
 		return (-1);
 
 	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	md_free(filename);
+	free(filename);
 
 	if (fd == -1)
 		return (-1);
@@ -78,7 +76,7 @@ int md_read_history(md_info_t *md_info)
 		return (0);
 
 	fd = open(filename, O_RDONLY);
-	md_free(filename);
+	free(filename);
 
 	if (fd == -1)
 		return (0);
@@ -97,7 +95,7 @@ int md_read_history(md_info_t *md_info)
 	buf[fsize] = 0;
 
 	if (rdlen <= 0)
-		return (md_free(buf), 0);
+		return (free(buf), 0);
 
 	close(fd);
 
@@ -112,7 +110,7 @@ int md_read_history(md_info_t *md_info)
 	if (last != i)
 		md_build_history_list(md_info, buf + last, linecount++);
 
-	md_free(buf);
+	free(buf);
 	md_info->histcount = linecount;
 
 	while (md_info->histcount-- >= HIST_MAX)
